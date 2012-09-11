@@ -20,6 +20,15 @@ plat_sound = "gchirp.wav"
 ae_sound = "gmorse-a.wav"
 other_sound = "g440-short-dot.wav"
 
+sounds_dic = {'#mel' : 'mel_sound.wav',
+			  '#codebench'  : 'morse-n.wav',
+			  '#watercooler'  : '440-380-drop.wav',
+			  '#montavista'  : 'bullet.wav',
+			  '#marketing' : 'Purr.aiff',
+			  '#platform' : 'chirp.wav',
+			  '#test' : 'ringout.wav',
+			  '#other' : '440-short-dot.wav'}
+
 # xchat.prnt("This is xchat.prnt")
 
 nick = xchat.get_prefs("irc_nick1")
@@ -43,16 +52,21 @@ nick = xchat.get_prefs("irc_nick1")
 #	for i in user_list:
 # 		print i.nick
 
-# This code is an attempt to hook into a channel message
 def channel_processor(word, word_eol, userdata):
 	current_channel = xchat.get_info("channel")
 	current_nick = xchat.get_info("nick")
 	
 	if mynick in word:
 		os.system('afplay /Users/chris/Library/Sounds/c-d-g.wav')
+		return
 
+	sound_cmd = 'afplay ' + sounds_dir + '/'
 	# print "Channel message received on %s" % (current_channel)
 	if (current_channel == '#marketing'):
-		os.system('afplay /Users/chris/Library/Sounds/Purr.aiff')
+		sound_cmd = sound_cmd + sounds_dir + Purr.aiff
+		print sound_cmd
+
+	os.system(sound_cmd)
+	#os.system('afplay /Users/chris/Library/Sounds/Purr.aiff')
 
 xchat.hook_print("Channel Message", channel_processor)
