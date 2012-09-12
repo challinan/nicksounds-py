@@ -1,0 +1,13 @@
+This is a python plugin for xchat which implements
+custom sounds on a per-channel basis.  It also includes
+a command handler to enable or disable sounds without
+the need to unload the plugin.  A custom sound can
+be played whenever your nick appears in a message.
+
+Installation is trivial, just load the plugin using xchat-s
+plugin load interface.  Usually, just /load <path-to>/pnicksounds.py
+
+Most xchat-compatible clients have a menu item to load this, and it
+can be loaded automatically at startup.
+
+
