@@ -32,6 +32,7 @@ sounds_dic = {'#mel' : 'mel_sound.wav',
 # xchat.prnt("This is xchat.prnt")
 
 nick = xchat.get_prefs("irc_nick1")
+print "mynick is %s" % nick
 #if xchat.nickcmp(nick, mynick) == 0: 
 #	print "They are the same!"
 
@@ -52,21 +53,27 @@ nick = xchat.get_prefs("irc_nick1")
 #	for i in user_list:
 # 		print i.nick
 
-def channel_processor(word, word_eol, userdata):
+def channel_msg_processor(word, word_eol, userdata):
 	current_channel = xchat.get_info("channel")
 	current_nick = xchat.get_info("nick")
 	
 	if mynick in word:
+		print "mynick"
 		os.system('afplay /Users/chris/Library/Sounds/c-d-g.wav')
-		return
 
 	sound_cmd = 'afplay ' + sounds_dir + '/'
 	# print "Channel message received on %s" % (current_channel)
-	if (current_channel == '#marketing'):
-		sound_cmd = sound_cmd + sounds_dir + Purr.aiff
-		print sound_cmd
-
+	sound_cmd = sound_cmd + sounds_dic[current_channel]
 	os.system(sound_cmd)
-	#os.system('afplay /Users/chris/Library/Sounds/Purr.aiff')
+	return xchat.EAT_NONE
 
-xchat.hook_print("Channel Message", channel_processor)
+# This hook is called whenever my nick appears in a channel message
+def channel_hilite_processor(word, word_eol, userdata):
+	sound_cmd = 'afplay ' + sounds_dir + '/'
+	sound_cmd = sound_cmd + 'c-d-g.wav'
+	os.system(sound_cmd)
+	return xchat.EAT_NONE
+
+xchat.hook_print("Channel Message", channel_msg_processor)
+xchat.hook_print("Channel Msg Hilight", channel_hilite_processor)
+xchat.hook_print("Private Message", channel_hilite_processor)
