@@ -33,13 +33,13 @@ def channel_msg_processor(word, word_eol, userdata):
 	current_channel = xchat.get_info("channel")
 	current_nick = xchat.get_info("nick")
 	
-	if mynick in word:
-		print "mynick"
-		os.system('afplay /Users/chris/Library/Sounds/c-d-g.wav')
-
 	sound_cmd = 'afplay ' + sounds_dir + '/'
 	# print "Channel message received on %s" % (current_channel)
-	sound_cmd = sound_cmd + sounds_dic[current_channel]
+	if current_channel in sounds_dic:
+		sound_cmd = sound_cmd + sounds_dic[current_channel]
+	else:
+		sound_cmd = sound_cmd + sounds_dic['#other']
+
 	os.system(sound_cmd)
 	return xchat.EAT_NONE
 
