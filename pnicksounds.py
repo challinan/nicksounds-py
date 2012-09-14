@@ -1,6 +1,6 @@
-__module_name__ = "helloworld" 
-__module_version__ = "1.0" 
-__module_description__ = "Python module example" 
+__module_name__ = "nicksounds.py" 
+__module_version__ = "1.1" 
+__module_description__ = "Play custom sounds based on channel" 
  
 import os
 import xchat
@@ -21,7 +21,8 @@ sounds_dic = {'#mel' : 'mel_sound.wav',
 			  '#marketing' : 'Purr.aiff',
 			  '#platform' : 'chirp.wav',
 			  '#test' : 'ringout.wav',
-			  '#other' : '440-short-dot.wav'}
+			  'hilite' : 'c-d-g.wav',
+			  'other' : '440-short-dot.wav'}
 
 mynick = xchat.get_prefs("irc_nick1")
 print "mynick is %s - sounds are enabled" % mynick
@@ -38,7 +39,7 @@ def channel_msg_processor(word, word_eol, userdata):
 	if current_channel in sounds_dic:
 		sound_cmd = sound_cmd + sounds_dic[current_channel]
 	else:
-		sound_cmd = sound_cmd + sounds_dic['#other']
+		sound_cmd = sound_cmd + sounds_dic['other']
 
 	os.system(sound_cmd)
 	return xchat.EAT_NONE
@@ -48,8 +49,7 @@ def channel_hilite_processor(word, word_eol, userdata):
 	if (sounds_on == 0):
 		return xchat.EAT_NONE
 
-	sound_cmd = 'afplay ' + sounds_dir + '/'
-	sound_cmd = sound_cmd + 'c-d-g.wav'
+	sound_cmd = 'afplay ' + sounds_dir + '/' + sounds_dic['hilite']
 	os.system(sound_cmd)
 	return xchat.EAT_NONE
 
