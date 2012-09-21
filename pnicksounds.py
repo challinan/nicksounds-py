@@ -8,6 +8,7 @@ import xchat
 # My first python program - probably 100 better ways to do this...
 # Includes a command handler to enable and disable sounds without unloading the plugin
 # /ns off or /ns on to disable/enable sounds
+# Chris Hallinan challinan@gmail.com
 
 sounds_on = 1
 play_cmd = "afplay"
