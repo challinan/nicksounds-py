@@ -59,7 +59,6 @@ def channel_hilite_processor(word, word_eol, userdata):
 
 # This hook is called on a private message
 def channel_pvt_message(word, word_eol, userdata):
-	print "This is a private message"
 	if (sounds_on == 0):
 		return xchat.EAT_NONE
 
@@ -83,5 +82,7 @@ def do_sound_control(word, word_eol, userdata):
 xchat.hook_print("Channel Message", channel_msg_processor)
 xchat.hook_print("Channel Msg Hilight", channel_hilite_processor)
 xchat.hook_print("Private Message", channel_pvt_message)
+
+# This is the one that works
 xchat.hook_print("Private Message to Dialog", channel_pvt_message)
 xchat.hook_command("ns", do_sound_control)
