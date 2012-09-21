@@ -27,6 +27,10 @@ sounds_dic = {'#mel' : 'mel_sound.wav',
 mynick = xchat.get_prefs("irc_nick1")
 print "mynick is %s - sounds are enabled" % mynick
 
+def play_mysound(sound):
+	sound_command = 'afplay ' + sounds_dir + '/' + sound + ' &'
+	os.system(sound_command)
+
 def channel_msg_processor(word, word_eol, userdata):
 	if (sounds_on == 0):
 		return xchat.EAT_NONE
@@ -34,14 +38,13 @@ def channel_msg_processor(word, word_eol, userdata):
 	current_channel = xchat.get_info("channel")
 	current_nick = xchat.get_info("nick")
 	
-	sound_cmd = 'afplay ' + sounds_dir + '/'
 	# print "Channel message received on %s" % (current_channel)
 	if current_channel in sounds_dic:
-		sound_cmd = sound_cmd + sounds_dic[current_channel]
+		sound_file = sounds_dic[current_channel]
 	else:
-		sound_cmd = sound_cmd + sounds_dic['other']
+		sound_file = sounds_dic['other']
 
-	os.system(sound_cmd)
+	play_mysound(sound_file)
 	return xchat.EAT_NONE
 
 # This hook is called whenever my nick appears in a channel message
@@ -49,8 +52,18 @@ def channel_hilite_processor(word, word_eol, userdata):
 	if (sounds_on == 0):
 		return xchat.EAT_NONE
 
-	sound_cmd = 'afplay ' + sounds_dir + '/' + sounds_dic['hilite']
-	os.system(sound_cmd)
+	sound_file = sounds_dic['hilite']
+	play_mysound(sound_file)
+	return xchat.EAT_NONE
+
+# This hook is called on a private message
+def channel_pvt_message(word, word_eol, userdata):
+	print "This is a private message"
+	if (sounds_on == 0):
+		return xchat.EAT_NONE
+
+	sound_file = sounds_dic['hilite']
+	play_mysound(sound_file)
 	return xchat.EAT_NONE
 
 def do_sound_control(word, word_eol, userdata):
@@ -68,5 +81,6 @@ def do_sound_control(word, word_eol, userdata):
 
 xchat.hook_print("Channel Message", channel_msg_processor)
 xchat.hook_print("Channel Msg Hilight", channel_hilite_processor)
-xchat.hook_print("Private Message", channel_hilite_processor)
+xchat.hook_print("Private Message", channel_pvt_message)
+xchat.hook_print("Private Message to Dialog", channel_pvt_message)
 xchat.hook_command("ns", do_sound_control)
