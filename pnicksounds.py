@@ -21,6 +21,7 @@ sounds_dic = {'#mel' : 'mel_sound.wav',
 			  '#montavista'  : 'bullet.wav',
 			  '#marketing' : 'Purr.aiff',
 			  '#platform' : 'chirp.wav',
+			  '#amd' : 'amd-sound.wav',
 			  '#test' : 'ringout.wav',
 			  'hilite' : 'c-d-g.wav',
 			  'other' : '440-short-dot.wav'}
